@@ -1,0 +1,12 @@
+# 서명 키 (보안 필수)
+*.pem
+*.key
+
+# 빌드 산출물
+*/Debug/
+*.elf
+*.srec
+*.map
+
+# e2studio 로그
+JLinkLog.log
