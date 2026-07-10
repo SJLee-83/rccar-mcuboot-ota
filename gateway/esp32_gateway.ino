@@ -33,7 +33,7 @@ const char* TOPIC_COMMAND = "RCCar/command";
 const char* TOPIC_SENSING = "RCCar/sensing";  // (센서 역방향 사용 시)
 
 // ---------- SPI 핀 (Renesas RA6E1 Slave <-> ESP32 Master) ----------
-// 이 대화에서 확인된 배선:
+// 배선:
 //   Renesas P402-CS(GPIO5), P102-SCK(GPIO18),
 //   P101-MOSI(GPIO23), P100-MISO(GPIO19)
 //   GND 공통 필수
