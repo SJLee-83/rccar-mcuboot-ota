@@ -129,4 +129,4 @@ sudo apt install mosquitto mosquitto-clients   # 포트 1883
 
 ## 개발자
 
-이승재 — RA6E1 펌웨어 · 주행/센서 제어 담당
+이승재 — RA6E1 펌웨어 · 주행/센서 제어 · 무선 제어 체인(GUI · MQTT · ESP32 게이트웨이) 담당

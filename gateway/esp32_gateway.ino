@@ -1,5 +1,5 @@
 /*
- * ESP32 게이트웨이 — MCUboot RC카 
+ * ESP32 게이트웨이 — MCUboot RC카
  *
  * 역할:
  *   WiFi -> MQTT 구독(RCCar/command) -> JSON 파싱 ->

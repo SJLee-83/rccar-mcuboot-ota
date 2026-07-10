@@ -188,4 +188,4 @@ C-7a에서 슬롯 교체는 검증했으나 Overwrite 모드라 롤백이 없다
 
 > **보안 주의**: 서명 키 `root-ec-p256.pem`은 `.gitignore`로 제외됨. 저장소에 포함되지 않음.
 
-**→ 팀 전체 프로젝트: [rccar-sdv-project 저장소] (링크 예정)**
+**→ 팀 전체 프로젝트: [rccar_ota_project](https://github.com/SJLee-83/rccar_ota_project)**
