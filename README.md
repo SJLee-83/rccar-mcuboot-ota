@@ -28,7 +28,7 @@ Renesas RA6E1(FPB-RA6E1) RC카에 **MCUboot 부트로더 기반 보안 OTA**를 
 ```mermaid
 flowchart LR
     BASE["구동·제어 베이스 (이승재)<br/>RA6E1 주행 펌웨어<br/>관제 GUI · MQTT · ESP32 · SPI 명령 체인"]
-    A["Dual-Bank OTA · AI 음성 제어 (박찬혁)<br/>팀 저장소 · 최종 시연 채택"]
+    A["Dual-Bank OTA · AI 음성 제어 (팀원)<br/>팀 저장소 · 최종 시연 채택"]
     B["MCUboot 부트로더 기반 OTA (이승재)<br/>이 저장소 · 슬롯 교체 검증까지"]
 
     BASE --> A
