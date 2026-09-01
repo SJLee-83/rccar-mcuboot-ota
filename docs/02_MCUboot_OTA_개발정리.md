@@ -181,10 +181,13 @@ C-7a에서 슬롯 교체는 검증했으나 Overwrite 모드라 롤백이 없다
 
 ## 10. 저장소 구성
 
-| 폴더 | 내용 |
-|------|------|
-| `ra_mcuboot_rccar/` | MCUboot 부트로더 프로젝트 |
-| `1st_pjt_rccar_ota/` | RC카 애플리케이션 (모터/SPI/I2C 제어) |
+```
+rccar-mcuboot-ota/
+├── ra_mcuboot_rccar/     # MCUboot 부트로더 프로젝트
+├── 1st_pjt_rccar_ota/    # RC카 애플리케이션 (모터/SPI/I2C 제어)
+├── gateway/              # 무선 제어 체인 (PySide6 GUI + ESP32)
+└── docs/                 # 개발 기록
+```
 
 > **보안 주의**: 서명 키 `root-ec-p256.pem`은 `.gitignore`로 제외됨. 저장소에 포함되지 않음.
 

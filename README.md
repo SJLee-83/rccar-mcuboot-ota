@@ -25,12 +25,14 @@ Renesas RA6E1(FPB-RA6E1) RC카에 **MCUboot 부트로더 기반 보안 OTA**를 
 
 구동·제어 베이스를 먼저 구축하고, 그 위에서 OTA 구현이 두 갈래로 분기.
 
-```
-구동·제어 베이스 (이승재)
-  RA6E1 주행 펌웨어 + 관제 GUI -> MQTT -> ESP32 -> SPI 명령 체인
-   |
-   +-- Dual-Bank OTA · AI 음성 제어 (박찬혁)   팀 저장소, 최종 시연 채택
-   +-- MCUboot 부트로더 기반 OTA (이승재)      이 저장소, 슬롯 교체 검증까지 진행
+```mermaid
+flowchart LR
+    BASE["구동·제어 베이스 (이승재)<br/>RA6E1 주행 펌웨어<br/>관제 GUI · MQTT · ESP32 · SPI 명령 체인"]
+    A["Dual-Bank OTA · AI 음성 제어 (박찬혁)<br/>팀 저장소 · 최종 시연 채택"]
+    B["MCUboot 부트로더 기반 OTA (이승재)<br/>이 저장소 · 슬롯 교체 검증까지"]
+
+    BASE --> A
+    BASE --> B
 ```
 
 ---
@@ -40,19 +42,15 @@ Renesas RA6E1(FPB-RA6E1) RC카에 **MCUboot 부트로더 기반 보안 OTA**를 
 ```
 rccar-mcuboot-ota/
 ├── ra_mcuboot_rccar/     # MCUboot 부트로더 (Flash 0x0~0x10000)
-├── 1st_pjt_rccar_ota/    # RC카 애플리케이션 (모터/SPI/I2C 제어, Flash 0x10000~)
-├── gateway/              # 무선 제어 게이트웨이 (PC GUI + ESP32)
+│                         #   서명 검증 후 앱으로 점프. mbedtls · MCUboot · ECDSA 포함
+├── 1st_pjt_rccar_ota/    # RC카 애플리케이션 (Flash 0x10000~)
+│                         #   부트로더가 부팅시키는 대상. SPI 명령 수신 후 모터 제어
+├── gateway/              # 무선 제어 체인
 │   ├── mainwindow.py     #   PySide6 관제 GUI
 │   └── esp32_gateway.ino #   MQTT → SPI 변환 게이트웨이
 └── docs/
     └── 02_MCUboot_OTA_개발정리.md   # 상세 개발 기록
 ```
-
-| 폴더 | 역할 |
-|------|------|
-| `ra_mcuboot_rccar` | 부트로더. 서명 검증 후 앱으로 점프. mbedtls, MCUboot, ECDSA 포함 |
-| `1st_pjt_rccar_ota` | 애플리케이션. 부트로더가 부팅시키는 대상. SPI 명령 수신 → 모터 제어 |
-| `gateway` | 무선 제어 체인. GUI가 MQTT로 명령 발행, ESP32가 SPI로 변환해 RA6E1 전송 |
 
 - `1st_pjt_rccar_ota` 는 팀 저장소와 동일한 구동·제어 베이스 사본. 부트로더 검증에 부팅 대상이 필요해 함께 둠
 - `gateway` 는 그 베이스의 무선 제어 체인 원형이며, 팀 저장소 `rccar_pjt/OTA/` 의 `esp32.ino` · `mainwindow.py` 가 여기에 OTA 전송이 얹힌 확장본
@@ -74,9 +72,18 @@ rccar-mcuboot-ota/
 
 MCUboot RC카 무선 조종용 PC GUI 와 ESP32 게이트웨이.
 
-```
-[Qt GUI(PC)] --MQTT--> [Broker(Rpi5/PC)] --MQTT--> [ESP32] --SPI--> [Renesas RA6E1] --> 모터
-   mainwindow.py           mosquitto:1883       esp32_gateway.ino     hal_entry.c
+```mermaid
+flowchart LR
+    G["Qt GUI (PC)<br/>mainwindow.py"]
+    B["Broker (Rpi5/PC)<br/>mosquitto:1883"]
+    E["ESP32<br/>esp32_gateway.ino"]
+    R["Renesas RA6E1<br/>hal_entry.c"]
+    M["모터"]
+
+    G -->|MQTT| B
+    B -->|MQTT| E
+    E -->|SPI| R
+    R --> M
 ```
 
 ### MQTT 규격
